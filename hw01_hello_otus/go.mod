@@ -1,4 +1,4 @@
-module github.com/anepretimovdiasoft/hw_go/tree/master/hw01_hello_otus
+module github.com/anepretimovdiasoft/hw_go/hw01_hello_otus
 
 go 1.22
 
