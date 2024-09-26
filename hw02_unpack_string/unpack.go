@@ -16,7 +16,12 @@ func Unpack(srcString string) (string, error) {
 		return "", nil
 	}
 
-	if isCorrect, err := Verify(srcString); isCorrect && err == nil {
+	isCorrect, err := verify(srcString)
+	if err != nil {
+		return "", err
+	}
+
+	if isCorrect {
 		runes := []rune(srcString)
 		size := len(runes)
 		for i := 0; i < size-1; i++ {
@@ -25,23 +30,18 @@ func Unpack(srcString string) (string, error) {
 			}
 			if !unicode.IsDigit(runes[i]) && unicode.IsDigit(runes[i+1]) {
 				repeatCount, _ := strconv.Atoi(string(runes[i+1]))
-				if repeatCount != 0 {
-					builder.WriteString(strings.Repeat(string(runes[i]), repeatCount))
-				}
+				repeatRuneWriter(runes[i], repeatCount, &builder)
 			}
 		}
 		if !unicode.IsDigit(runes[size-1]) {
 			builder.WriteRune(runes[size-1])
 		}
-	} else {
-		return "", err
 	}
 
 	return builder.String(), nil
 }
 
-func Verify(srcString string) (bool, error) {
-
+func verify(srcString string) (bool, error) {
 	runes := []rune(srcString)
 	if unicode.IsDigit(runes[0]) {
 		return false, ErrInvalidString
@@ -54,4 +54,10 @@ func Verify(srcString string) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func repeatRuneWriter(r rune, repeatCount int, builder *strings.Builder) {
+	if repeatCount != 0 {
+		builder.WriteString(strings.Repeat(string(r), repeatCount))
+	}
 }
