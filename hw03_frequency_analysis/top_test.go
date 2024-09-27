@@ -61,15 +61,6 @@ func TestTop10(t *testing.T) {
 		require.Equal(t, expected, Top10("а ааа аа"))
 	})
 
-	t.Run("less than 10 words", func(t *testing.T) {
-		expected := []string{
-			"а",
-			"аа",
-			"ааа",
-		}
-		require.Equal(t, expected, Top10("а ааа аа"))
-	})
-
 	t.Run("only punctuation marks", func(t *testing.T) {
 		expected := []string{
 			",",
