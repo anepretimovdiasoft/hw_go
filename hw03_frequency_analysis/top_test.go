@@ -44,6 +44,32 @@ var text = `Как видите, он  спускается  по  лестни�
 		В этот вечер...`
 
 func TestTop10(t *testing.T) {
+	t.Run("special characters", func(t *testing.T) {
+		expected := []string{
+			"১",
+			"১১১",
+		}
+		require.Equal(t, expected, Top10("১ ১ ১১১"))
+	})
+
+	t.Run("less than 10 words", func(t *testing.T) {
+		expected := []string{
+			"а",
+			"аа",
+			"ааа",
+		}
+		require.Equal(t, expected, Top10("а ааа аа"))
+	})
+
+	t.Run("only punctuation marks", func(t *testing.T) {
+		expected := []string{
+			",",
+			"!",
+			".",
+		}
+		require.Equal(t, expected, Top10(",\n.\n! !\t,\t,"))
+	})
+
 	t.Run("no words in empty string", func(t *testing.T) {
 		require.Len(t, Top10(""), 0)
 	})
