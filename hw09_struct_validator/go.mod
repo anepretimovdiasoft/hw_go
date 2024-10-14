@@ -1,3 +1,3 @@
-module github.com/fixme_my_friend/hw09_struct_validator
+module github.com/anepretimovdiasoft/hw_go/hw09_struct_validator
 
 go 1.22
